@@ -1,12 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@400;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-  
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Aleo', serif;
+}
+
   body {
-    font-family: Arial, sans-serif;
     line-height: 1.6;
-    min-height: 100vh;
     padding-bottom: 60px;
   }

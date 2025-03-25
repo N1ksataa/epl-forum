@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@400;600;700&display=swap');
+
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Aleo', serif;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+.content {
+    padding: 30px;
+    border-radius: 10px;
+}
+
+
+.home-container h1 {
+    font-size: 70px;
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+.home-container h2 {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-size: 55px;
+}
+
+.home-container p {
+    font-size: 20px;
+}
+.explore-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+.explore-button:hover {
+    background-color: #45a049;
+}

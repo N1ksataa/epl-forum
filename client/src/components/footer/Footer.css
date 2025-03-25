@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@400;600;700&display=swap');
+
 footer {
   display: flex;
   justify-content: center;
@@ -7,7 +9,7 @@ footer {
   left: 0;
   width: 100%;
   text-align: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Aleo', serif;
   background-color: #37003c;
   border: 1px solid black;
   height: 60px;

@@ -1,0 +1,88 @@
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid black;
+    background-color: rgba(247, 247, 247, 0.945);
+    font-family: 'Aleo', serif;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 350px;
+    z-index: 2;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  label {
+    text-align: left;
+    font-size: 18px;
+  }
+
+  input::placeholder, input, button {
+    font-family: 'Aleo', serif;
+  }
+  
+  input {
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: -5px;
+    font-size: 15px;
+  }
+  
+  input::placeholder {
+    font-size: 16px;
+    color: #888;
+  }
+  
+  button {
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 130px;
+    margin: 0 auto;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .signup-text {
+    margin-top: 12px;
+    margin-bottom: 0px;
+    font-size: 17px;
+  }
+  
+  .signup-text a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .signup-text a:hover {
+    text-decoration: underline;
+  }
+  
+  .error-border {
+    border-left: 6px solid red;
+  }
+  
+  .error-text {
+    color: red;
+    font-size: 16px;
+    margin-top: 4px;
+  }
+  
+  button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }

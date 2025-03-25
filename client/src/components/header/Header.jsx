@@ -24,6 +24,7 @@ export default function Header() {
             <div className="nav-center">
                 <ul>
                     <li><Link to="/">Home</Link></li>
+                    <li><Link to="/posts">Posts</Link></li>
                     <li><Link to="/my-team-posts">Posts About My Team</Link></li>
                     <li><Link to="/create-post">Create Post</Link></li>
                     <li><Link to="/my-posts">My Posts</Link></li>
@@ -48,6 +49,7 @@ export default function Header() {
             <div className={`menu ${menuOpen ? "open" : ""}`}>
                 <ul>
                     <li><Link to="/" onClick={closeMenu}>Home</Link></li>
+                    <li><Link to="/posts">Posts</Link></li>
                     <li><Link to="/my-team-posts" onClick={closeMenu}>Posts About My Team</Link></li>
                     <li><Link to="/create-post" onClick={closeMenu}>Create Post</Link></li>
                     <li><Link to="/my-posts" onClick={closeMenu}>My Posts</Link></li>
