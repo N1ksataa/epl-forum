@@ -92,19 +92,6 @@ class PostService {
         return post;
     }    
 
-    async toggleLike(postId, userId) {
-        try {
-            const post = await Post.findById(postId);
-            if (!post) {
-                throw new Error("Post not found");
-            }
-            await post.toggleLike(userId);
-            return post;
-        } catch (error) {
-            throw new Error(`Error toggling like: ${error.message}`);
-        }
-    }
-
     async addComment(postId, userId, commentText) {
         try {
             const post = await Post.findById(postId);

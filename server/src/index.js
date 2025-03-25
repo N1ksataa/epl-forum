@@ -7,6 +7,7 @@ dotenv.config();
 
 import userController from './controllers/userController.js';
 import postController from './controllers/postController.js';
+import standingsController from './controllers/standingsController.js'
 
 try {
     await mongoose.connect('mongodb://localhost:27017', { dbName: 'footballForum' });
@@ -24,5 +25,6 @@ app.use(cors({
 
 app.use('/api/users', userController);
 app.use('/api/posts', postController);
+app.use('/api/standings', standingsController)
 
 app.listen(5000, () => console.log('Server is listening on http://localhost:5000/api'));
