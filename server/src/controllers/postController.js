@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import postService from '../services/postService.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
+import Team from '../models/Team.js';
+import Post from '../models/Post.js';
 
 const postController = Router();
 
@@ -24,6 +26,16 @@ postController.post("/", authMiddleware, async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+postController.get('/forums', async (req, res) => {
+    try {
+        const forums = await postService.getForums();
+        res.json(forums);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 postController.get("/:id", async (req, res) => {
     const { id: postId } = req.params;
@@ -61,17 +73,6 @@ postController.delete("/:id", authMiddleware, async (req, res) => {
     }
 });
 
-postController.post("/:id/like", authMiddleware, async (req, res) => {
-    const { id: postId } = req.params;
-    const userId = req.user.id;
-
-    try {
-        const post = await postService.toggleLike(postId, userId);
-        res.json(post);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
 
 postController.get("/user/:userId", async (req, res) => {
     const { userId } = req.params;

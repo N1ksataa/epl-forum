@@ -144,6 +144,41 @@ class PostService {
             throw new Error(`Error deleting comment: ${error.message}`);
         }
     }
+    async getForums() {
+        try {
+            const teams = await Team.find();
+
+            const forums = await Promise.all(teams.map(async (team) => {
+
+                const lastPost = await Post.find({ team: team._id })
+                    .sort({ createdAt: -1 })
+                    .limit(1)
+                    .populate('author', 'username');
+
+
+                const postCount = await Post.countDocuments({ team: team._id });
+
+
+                const commentCount = await Post.aggregate([
+                    { $match: { team: team._id } },
+                    { $unwind: "$comments" },
+                    { $count: "commentCount" }
+                ]);
+
+                return {
+                    team: team,
+                    lastPost: lastPost[0],
+                    postCount,
+                    commentCount: commentCount.length > 0 ? commentCount[0].commentCount : 0
+                };
+            }));
+
+            return forums;
+        } catch (error) {
+            throw new Error('Error fetching forums: ' + error.message);
+        }
+    }
+
 }
 
 export default new PostService();
