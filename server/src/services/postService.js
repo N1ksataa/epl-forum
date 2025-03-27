@@ -88,9 +88,12 @@ class PostService {
             throw new Error('You are not authorized to delete this post');
         }
     
+        await Comment.deleteMany({ postId });
         await Post.findByIdAndDelete(postId);
+    
         return post;
-    }    
+    }
+    
 
     async addComment(postId, userId, commentText) {
         try {
@@ -138,12 +141,16 @@ class PostService {
             if (comment.userId.toString() !== userId) {
                 throw new Error("You are not authorized to delete this comment");
             }
+    
             await Comment.findByIdAndDelete(commentId);
+    
             await Post.findByIdAndUpdate(postId, { $pull: { comments: commentId } });
+    
         } catch (error) {
             throw new Error(`Error deleting comment: ${error.message}`);
         }
     }
+
     async getForums() {
         try {
             const teams = await Team.find();
@@ -178,6 +185,24 @@ class PostService {
             throw new Error('Error fetching forums: ' + error.message);
         }
     }
+
+    async getForumStats() {
+        try {
+            const postCount = await Post.countDocuments();
+            const messageCount = await Comment.countDocuments();
+            const memberCount = await User.countDocuments();
+            const latestMember = await User.findOne().sort({ createdAt: -1 }).select('username');
+    
+            return {
+                posts: postCount,
+                messages: messageCount,
+                members: memberCount,
+                latestMember: latestMember ? latestMember.username : null
+            };
+        } catch (error) {
+            throw new Error('Failed to retrieve forum stats');
+        }
+    }    
 
 }
 

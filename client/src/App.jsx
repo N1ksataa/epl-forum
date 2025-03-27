@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
-import PostsPage from "./components/post-page/PostPage";
+import PostsPage from "./components/post-page/PostsPage";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 

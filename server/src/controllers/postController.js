@@ -27,16 +27,6 @@ postController.post("/", authMiddleware, async (req, res) => {
     }
 });
 
-postController.get('/forums', async (req, res) => {
-    try {
-        const forums = await postService.getForums();
-        res.json(forums);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-
 postController.get("/:id", async (req, res) => {
     const { id: postId } = req.params;
 

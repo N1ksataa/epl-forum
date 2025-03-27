@@ -5,18 +5,29 @@ import './PostsPage.css';
 
 export default function PostsPage() {
     const [forums, setForums] = useState([]);
+    const [stats, setStats] = useState({ posts: 0, messages: 0, members: 0, latestMember: '', latestMemberId: '' });
+    const [trendingPosts, setTrendingPosts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/posts/forums')
+        fetch('http://localhost:5000/api/forum')
             .then(response => response.json())
             .then(data => setForums(data))
             .catch(error => console.error('Error fetching forums:', error));
+
+        fetch('http://localhost:5000/api/forum/stats')
+            .then(response => response.json())
+            .then(data => setStats(data))
+            .catch(error => console.error('Error fetching stats:', error));
+
+        fetch('http://localhost:5000/api/forum/trending')
+            .then(response => response.json())
+            .then(data => setTrendingPosts(data))
+            .catch(error => console.error('Error fetching trending posts:', error));
     }, []);
 
     return (
         <div className="posts-page-container">
             <main className="main-content">
-
                 <div className="topic-lists">
                     {forums.map(forum => (
                         <li key={forum.team._id} className="forum-item">
@@ -26,12 +37,13 @@ export default function PostsPage() {
                                     alt={forum.team.name}
                                     className="team-logo"
                                 />
-                                <Link to={`/forums/${forum.team._id}`} className="team-name">
+                                <Link to={`/posts/${forum.team._id}`} className="team-name">
                                     {forum.team.name}’s Posts
                                 </Link>
                                 <div className="post-stats">
                                     <span>Posts: {forum.postCount}</span>
-                                    <span>Messages: {forum.commentCount + forum.postCount}</span>
+                                    <span>Comments: {forum.commentCount}</span>
+                                    
                                 </div>
                                 <div className="last-post">
                                     {forum.lastPost ? (
@@ -45,7 +57,7 @@ export default function PostsPage() {
                                                 </Link>
                                             </span>
                                             <span className="last-post-title">
-                                                <Link to={`/post/${forum.lastPost._id}`} className="last-post-link">
+                                                <Link to={`/posts/${forum.lastPost._id}`} className="last-post-link">
                                                     {forum.lastPost.title.length > 23
                                                         ? forum.lastPost.title.substring(0, 23) + '...'
                                                         : forum.lastPost.title}
@@ -80,20 +92,28 @@ export default function PostsPage() {
                 <section className="trending-topics">
                     <h2>🔥 Trending Posts</h2>
                     <ul>
-                        <li><a href="#">Post 1</a> - 4K Replies</li>
-                        <li><a href="#">Post 2</a> - 11K Replies</li>
-                        <li><a href="#">Post 3</a> - 1K Replies</li>
-                        <li><a href="#">Post 4</a> - 48 Replies</li>
-                        <li><a href="#">Post 5</a> - 1K Replies</li>
+                        {trendingPosts.map(post => (
+                            <li key={post._id}>
+                                <Link to={`/post/${post._id}`}>{post.title}</Link> - {post.commentCount} Comments
+                            </li>
+                        ))}
                     </ul>
                 </section>
 
                 <section className="forum-stats">
                     <h2>📈 Forum Statistics</h2>
-                    <p>Threads: 14,122</p>
-                    <p>Messages: 2,289,319</p>
-                    <p>Members: 5,053</p>
-                    <p>Latest Member: niksata</p>
+                    <p>Posts: {stats.posts}</p>
+                    <p>Comments: {stats.messages}</p>
+                    <p>Members: {stats.members}</p>
+                    <p>Latest Member:
+                        {stats.latestMemberId ? (
+                            <Link to={`/profile/${stats.latestMemberId}`} className="username-link">
+                                {` ${stats.latestMember}`}
+                            </Link>
+                        ) : (
+                            ''
+                        )}
+                    </p>
                 </section>
             </aside>
         </div>

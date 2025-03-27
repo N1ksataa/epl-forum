@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@400;600;700&display=swap');
+
 html, body {
     margin: 0;
     padding: 0;
+    font-family: 'Aleo', serif;
 }
 
 .register-container {
@@ -29,12 +32,12 @@ html, body {
     font-size: 18px;
   }
   
-  input {
+  input, select {
     padding: 15px;
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 15px;
-    margin-top: -5px;
+    font-family: 'Aleo', serif;
   }
   
   input::placeholder {
@@ -87,11 +90,6 @@ html, body {
     background-color: gray;
     cursor: not-allowed;
   }
-  
-  input {
-    width: 90%;
-  }
-  
   
   #password-label, #rePassword-label {
     text-align: left;

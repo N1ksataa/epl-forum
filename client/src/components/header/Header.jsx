@@ -25,8 +25,8 @@ export default function Header() {
                 <ul>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/posts">Posts</Link></li>
-                    <li><Link to="/my-team-posts">Posts About My Team</Link></li>
                     <li><Link to="/create-post">Create Post</Link></li>
+                    <li><Link to="/my-team-posts">Posts About My Team</Link></li>
                     <li><Link to="/my-posts">My Posts</Link></li>
                 </ul>
             </div>
@@ -50,8 +50,8 @@ export default function Header() {
                 <ul>
                     <li><Link to="/" onClick={closeMenu}>Home</Link></li>
                     <li><Link to="/posts">Posts</Link></li>
-                    <li><Link to="/my-team-posts" onClick={closeMenu}>Posts About My Team</Link></li>
                     <li><Link to="/create-post" onClick={closeMenu}>Create Post</Link></li>
+                    <li><Link to="/my-team-posts" onClick={closeMenu}>Posts About My Team</Link></li>
                     <li><Link to="/my-posts" onClick={closeMenu}>My Posts</Link></li>
                     <li><Link to="/login" onClick={closeMenu}>Log in</Link></li>
                     <li><Link to="/register" onClick={closeMenu}>Register</Link></li>

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@400;600;700&display=swap');
+
+
 .posts-page-container {
     display: flex;
     justify-content: center;
@@ -35,7 +38,7 @@
     align-items: center;
     width: 100%;
     gap: 15px;
-    padding: 0 15px 0 25px;
+    padding: 0 25px;
 }
 
 .team-logo {
@@ -133,6 +136,10 @@
     padding: 20px;
 }
 
+.sidebar h2 {
+    text-align: center;
+}
+
 .standings-section, .trending-topics, .forum-stats {
     background: rgb(255, 255, 255);
     border-radius: 10px;
@@ -155,31 +162,10 @@
 
 .trending-topics li a {
     text-decoration: none;
-    color: #333;
+    color: black;
 }
 
-.forum-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.forum-table th, .forum-table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-.forum-table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-
-.forum-table a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-.forum-table a:hover {
-    text-decoration: underline;
+.forum-stats p{
+    margin: 10x 0;
+    padding-left: 40px;
 }
