@@ -1,0 +1,138 @@
+.posts-container {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 70px;
+    padding: 20px;
+}
+
+.posts-container .team-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 40%;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 15px;
+    background: white;
+    margin-bottom: 20px;
+}
+
+.posts-container .team-header h2 {
+    font-size: 33px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.posts-container .team-logo {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    margin: 15px;
+}
+
+.posts-container .posts-list {
+    list-style: none;
+    padding: 0;
+}
+
+.posts-container .post-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: white;
+    width: 70%;
+}
+
+.posts-container .post-content {
+    flex: 1;
+}
+
+.posts-container .post-title {
+    font-size: 23px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+.posts-container .post-meta {
+    margin: 0;
+    font-size: 14px;
+    color: gray;
+}
+
+.posts-container .post-stats {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    font-size: 14px;
+}
+
+.posts-container .replies {
+    font-weight: bold;
+    margin: 0 20px;
+}
+
+.posts-container .last-update {
+    margin-top: 5px;
+    font-size: 14px;
+    color: gray;
+}
+
+.posts-container .no-posts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    color: black;
+    padding: 20px;
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.posts-container .post-user{
+    text-decoration: none;
+    color: #e100ffd3;
+    font-weight: bold;
+}
+
+
+@media (max-width: 1400px) {
+    .posts-container .team-logo {
+        display: none;
+    }
+}
+
+@media (max-width: 950px) {
+    .posts-container .team-header h2 {
+        white-space: inherit;
+    }
+    
+    .posts-container .post-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .posts-container .post-stats {
+        align-items: center;
+        text-align: center;
+    }
+
+    .posts-container .replies {
+        margin: 10px 0;
+    }
+}

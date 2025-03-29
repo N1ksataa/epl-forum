@@ -27,7 +27,15 @@ class PostService {
 
     async getPostsByTeam(teamId) {
         try {
-            const posts = await Post.find({ team: teamId }).populate("author", "username").populate("team", "name");
+            const posts = await Post.find({ team: teamId })
+                .populate("author", "username")
+                .populate("team", "name logo")
+                .populate({
+                    path: "comments",
+                    select: "text createdAt",
+                    populate: { path: "userId", select: "username" } // Променено от author на userId
+                });
+    
             if (posts.length === 0) {
                 throw new Error("No posts found for this team");
             }

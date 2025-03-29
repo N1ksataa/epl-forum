@@ -57,7 +57,7 @@ export default function PostsPage() {
                                                 </Link>
                                             </span>
                                             <span className="last-post-title">
-                                                <Link to={`/posts/${forum.lastPost._id}`} className="last-post-link">
+                                                <Link to={`/posts/${forum.team._id}/${forum.lastPost._id}`} className="last-post-link">
                                                     {forum.lastPost.title.length > 23
                                                         ? forum.lastPost.title.substring(0, 23) + '...'
                                                         : forum.lastPost.title}
