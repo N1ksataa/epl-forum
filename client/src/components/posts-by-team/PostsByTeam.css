@@ -47,10 +47,12 @@
     margin-bottom: 20px;
     background: white;
     width: 70%;
+    position: relative;
 }
 
 .posts-container .post-content {
     flex: 1;
+    margin-bottom: 0;
 }
 
 .posts-container .post-title {
@@ -58,6 +60,7 @@
     font-weight: bold;
     text-decoration: none;
     color: black;
+    margin-bottom: 0;
 }
 
 .posts-container .post-meta {
@@ -78,6 +81,13 @@
 .posts-container .replies {
     font-weight: bold;
     margin: 0 20px;
+}
+
+.posts-container .replies.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-70%, -50%);
 }
 
 .posts-container .last-update {
@@ -116,7 +126,7 @@
     }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1200px) {
     .posts-container .team-header h2 {
         white-space: inherit;
     }
@@ -125,6 +135,7 @@
         flex-direction: column;
         text-align: center;
         padding: 10px;
+        min-height: 80px;
     }
 
     .posts-container .post-stats {
@@ -134,5 +145,20 @@
 
     .posts-container .replies {
         margin: 10px 0;
+    }
+
+    .posts-container .replies.center {
+        margin-top: 25px;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (max-width: 950px) {
+    .posts-container .post-item {
+        min-height: 100px;
+    }
+
+    .posts-container .replies.center {
+        margin-top: 37px;
     }
 }

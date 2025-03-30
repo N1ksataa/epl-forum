@@ -59,13 +59,17 @@ const userService = {
         return { token: `Bearer ${token}`, user: userWithoutPassword };
     },
 
-    async getUserById(id) {
-        const user = await User.findById(id).select('-password');
-        if (!user) {
-            throw new Error('User not found');
-        }
-        return user;
-    },
+async getUserById(id) {
+    const user = await User.findById(id)
+        .select('-password')
+        .populate('favoriteTeam', 'name');
+    
+    if (!user) {
+        throw new Error('User not found');
+    }
+    
+    return user;
+},
 
     async updateUser(id, data) {
         const user = await User.findById(id);

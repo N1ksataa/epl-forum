@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import "./PostsByTeam.css";
 
 export default function PostsByTeam() {
     const { teamId } = useParams();
     const [posts, setPosts] = useState([]);
     const [team, setTeam] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:5000/api/posts/team/${teamId}`)
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) {
+                    navigate("/404");
+                }
+                return res.json();
+            })
             .then((data) => {
                 setPosts(data);
                 if (data.length > 0) {
@@ -17,7 +23,8 @@ export default function PostsByTeam() {
                 }
             })
             .catch((err) => console.error("Failed to fetch posts", err));
-    }, [teamId]);
+    }, [teamId, navigate]);
+
 
     return (
         <div className="posts-container">
@@ -45,7 +52,9 @@ export default function PostsByTeam() {
                                     </p>
                                 </div>
 
-                                <div className="replies">{post.comments.length} Replies</div>
+                                <div className={`replies ${post.comments.length === 0 ? 'center' : ''}`}>
+                                    {post.comments.length > 0 ? `${post.comments.length} Replies` : "No replies"}
+                                </div>
 
                                 {lastComment && (
                                     <div className="post-stats">

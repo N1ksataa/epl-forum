@@ -17,7 +17,8 @@ class PostService {
         try {
             const posts = await Post.find({ author: authorId })
                 .populate("author", "username email")
-                .populate("team", "name");
+                .populate("team", "name")
+                .sort({ createdAt: -1 });
     
             return posts;
         } catch (error) {
@@ -25,37 +26,56 @@ class PostService {
         }
     }
 
-    async getPostsByTeam(teamId) {
-        try {
-            const posts = await Post.find({ team: teamId })
-                .populate("author", "username")
-                .populate("team", "name logo")
-                .populate({
-                    path: "comments",
-                    select: "text createdAt",
-                    populate: { path: "userId", select: "username" } // Променено от author на userId
-                });
-    
-            if (posts.length === 0) {
-                throw new Error("No posts found for this team");
-            }
-            return posts;
-        } catch (error) {
-            throw new Error(`Error fetching posts: ${error.message}`);
+async getPostsByTeam(teamId) {
+    try {
+        const teamExists = await Team.findById(teamId);
+        if (!teamExists) {
+            throw new Error('Team not found');
         }
-    }
 
-    async getPostById(postId) {
-        try {
-            const post = await Post.findById(postId).populate("author", "username email").populate("comments");
-            if (!post) {
-                throw new Error("Post not found");
-            }
-            return post;
-        } catch (error) {
-            throw new Error(`Error fetching post: ${error.message}`);
-        }
+        const posts = await Post.find({ team: teamId })
+            .populate("author", "username")
+            .populate("team", "name logo")
+            .populate({
+                path: "comments",
+                select: "text createdAt",
+                populate: { path: "userId", select: "username" }
+            });
+
+        return posts;
+
+    } catch (error) {
+        throw error;
     }
+}
+
+    
+async getPostById(postId) {
+    try {
+        const post = await Post.findById(postId)
+            .populate("author", "username email")
+            .populate({
+                path: "comments",
+                populate: {
+                    path: "userId",
+                    select: "username"
+                }
+            })
+            .populate({
+                path: "team",
+                select: "name"
+            });
+
+        if (!post) {
+            throw new Error("Post not found");
+        }
+        
+        return post;
+    } catch (error) {
+        throw new Error(`Error fetching post: ${error.message}`);
+    }
+}
+
 
     async getAllPosts() {
         try {
@@ -158,59 +178,6 @@ class PostService {
             throw new Error(`Error deleting comment: ${error.message}`);
         }
     }
-
-    async getForums() {
-        try {
-            const teams = await Team.find();
-
-            const forums = await Promise.all(teams.map(async (team) => {
-
-                const lastPost = await Post.find({ team: team._id })
-                    .sort({ createdAt: -1 })
-                    .limit(1)
-                    .populate('author', 'username');
-
-
-                const postCount = await Post.countDocuments({ team: team._id });
-
-
-                const commentCount = await Post.aggregate([
-                    { $match: { team: team._id } },
-                    { $unwind: "$comments" },
-                    { $count: "commentCount" }
-                ]);
-
-                return {
-                    team: team,
-                    lastPost: lastPost[0],
-                    postCount,
-                    commentCount: commentCount.length > 0 ? commentCount[0].commentCount : 0
-                };
-            }));
-
-            return forums;
-        } catch (error) {
-            throw new Error('Error fetching forums: ' + error.message);
-        }
-    }
-
-    async getForumStats() {
-        try {
-            const postCount = await Post.countDocuments();
-            const messageCount = await Comment.countDocuments();
-            const memberCount = await User.countDocuments();
-            const latestMember = await User.findOne().sort({ createdAt: -1 }).select('username');
-    
-            return {
-                posts: postCount,
-                messages: messageCount,
-                members: memberCount,
-                latestMember: latestMember ? latestMember.username : null
-            };
-        } catch (error) {
-            throw new Error('Failed to retrieve forum stats');
-        }
-    }    
 
 }
 

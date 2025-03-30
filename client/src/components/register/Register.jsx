@@ -53,12 +53,15 @@ export default function Register() {
                 <input type="text" id="username" placeholder="Enter your username" onChange={handleChange} />
 
                 <label htmlFor="favoriteTeam">Favorite Team:</label>
-                <select id="favoriteTeam" onChange={handleChange}>
-                    <option value="">Select your favorite team</option>
+                <select id="favoriteTeam" onChange={handleChange} defaultValue="">
+                    <option value="" disabled>Select your favorite team</option>
                     {teams.map((team) => (
-                        <option key={team._id} value={team._id}>{team.name}</option>
+                        <option key={team._id} value={team._id}>
+                            {team.name}
+                        </option>
                     ))}
                 </select>
+
 
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" placeholder="Enter your password" onChange={handleChange} />
@@ -66,7 +69,7 @@ export default function Register() {
                 <label htmlFor="rePassword">Confirm Password:</label>
                 <input type="password" id="rePassword" placeholder="Confirm your password" onChange={handleChange} />
 
-            
+
 
                 <button type="submit">Sign Up</button>
             </form>

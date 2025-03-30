@@ -1,0 +1,123 @@
+.profile-container {
+    width: 50%;
+    min-height: 800px;
+    margin: 50px auto 90px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-header h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.profile-container h3 {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 26px;
+}
+
+.profile-header p {
+    font-size: 16px;
+    color: gray;
+}
+
+.edit-profile-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.edit-profile-btn:hover {
+    background: #45a049;
+}
+
+.user-posts {
+    list-style: none;
+    padding: 0;
+}
+
+.user-posts .post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 15px;
+    margin: auto;
+    margin-bottom: 20px;
+    background: white;
+    width: 65%;
+}
+
+.post-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.user-posts .post-meta {
+    font-size: 14px;
+    color: gray;
+    margin: 0;
+}
+
+.user-posts .replies {
+    font-weight: bold;
+    min-width: 80px;
+    text-align: right;
+}
+
+.post-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.post-title:hover {
+    text-decoration: underline;
+}
+
+
+.profile-container .no-posts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    color: black;
+    padding: 20px;
+    width: 70%;
+    margin: 20px auto;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .user-posts .post-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-posts .replies {
+        text-align: left;
+        margin-top: 10px;
+    }
+}

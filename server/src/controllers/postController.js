@@ -81,9 +81,6 @@ postController.get("/team/:teamId", async (req, res) => {
     const { teamId } = req.params;
     try {
         const posts = await postService.getPostsByTeam(teamId);
-        if (posts.length === 0) {
-            return res.status(404).json({ message: "No posts found for this team" });
-        }
         res.json(posts);
     } catch (err) {
         res.status(500).json({ message: err.message });

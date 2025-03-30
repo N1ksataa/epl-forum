@@ -20,6 +20,7 @@ form {
 
 label {
     text-align: left;
+    font-weight: bold;
     font-size: 18px;
 }
 
@@ -40,7 +41,7 @@ button {
     padding: 12px;
     background-color: #4CAF50;
     color: white;
-    border: none;
+    border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
     font-size: 18px;

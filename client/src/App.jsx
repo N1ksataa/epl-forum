@@ -10,6 +10,10 @@ import Home from "./components/home/Home";
 import CreatePost from "./components/create-post/CreatePost"
 import PostsPage from "./components/posts-page/PostsPage";
 import PostsByTeam from "./components/posts-by-team/PostsByTeam";
+import ProfilePage from "./components/profile-page/ProfilePage";
+import EditProfile from "./components/edit-profile/EditProfile";
+import PostDetails from "./components/post-details/PostDetails";
+import NotFound from "./components/404/NotFound";
 
 function App() {
     return (
@@ -21,8 +25,13 @@ function App() {
                     <Route path="/posts" element={<PostsPage />} />
                     <Route path="/create-post" element={<CreatePost />} />
                     <Route path="/posts/:teamId" element={<PostsByTeam />} />
+                    <Route path="/posts/:teamId/:postId" element={<PostDetails />} />
+                    <Route path="/profile/:userId" element={<ProfilePage />} />
+                    <Route path="/edit-profile" element={<EditProfile/>} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/404" element={<NotFound />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />
             </div>

@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@400;600;700&display=swap');
+
+.user-dashboard {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+    text-align: center;
+    width: 400px;
+    z-index: 2;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    overflow: hidden;
+  }
+  
+  h2, h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .account-info {
+    margin-bottom: 20px;
+  }
+  
+  .account-info p {
+    margin: 5px 0;
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .user-dashboard button {
+    padding: 10px 15px;
+    background-color: #ae2380;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 5px 0;
+    width: 165px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .user-dashboard button:hover {
+    background-color: #911567;
+  }
+  
+  .user-dashboard .dismiss {
+    background-color: #f44336;
+  }
+  
+  .user-dashboard .dismiss:hover {
+    background-color: #e53935;
+  }
+  
+  .user-dashboard .confirm {
+    background-color: #4CAF50;
+  }
+  
+  .user-dashboard .confirm:hover {
+    background-color: #45a049;
+  }
+  
+  .confirm:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+  }
+  
+  .edit-section {
+    margin: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    text-align: left;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  input {
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    margin-top: -5px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  input::placeholder {
+    font-size: 15px;
+    color: #888;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .error-border {
+    border-left: 6px solid red;
+  }
+  
+  .error-text {
+    color: red;
+    font-size: 16px;
+    margin-top: 4px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 5px;
+  }
+  
+  .form-buttons button {
+    width: 48%;
+  }
