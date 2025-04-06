@@ -11,16 +11,21 @@ const userService = {
     async register(username, email, password, favoriteTeam) {
         const existingUserByUsername = await User.findOne({ username });
         if (existingUserByUsername) {
-            throw new Error('Username already exists');
+            const error = new Error('Username already exists');
+            error.status = 400;
+            throw error;
         }
-
+    
         const existingUserByEmail = await User.findOne({ email });
         if (existingUserByEmail) {
-            throw new Error('Email already exists');
+            const error = new Error('Email already exists');
+            error.status = 400;
+            throw error;
         }
-
+    
         const user = new User({ username, email, password, favoriteTeam });
         const savedUser = await user.save();
+    
         if (favoriteTeam) {
             const team = await Team.findById(favoriteTeam);
             if (team) {
@@ -28,10 +33,10 @@ const userService = {
                 await team.save();
             }
         }
-
+    
         const userWithoutPassword = savedUser.toObject();
         delete userWithoutPassword.password;
-
+    
         return userWithoutPassword;
     },
 
@@ -55,8 +60,7 @@ const userService = {
         const userWithoutPassword = user.toObject();
         delete userWithoutPassword.password;
     
-        // Връщаме токена с "Bearer"
-        return { token: `Bearer ${token}`, user: userWithoutPassword };
+        return { token, user: userWithoutPassword };
     },
 
 async getUserById(id) {

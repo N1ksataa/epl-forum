@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import './Header.css'
+import { useUserContext } from "../../contexts/UserContext";
+import './Header.css';
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const { user } = useUserContext();
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const closeMenu = () => setMenuOpen(false);
@@ -25,18 +27,29 @@ export default function Header() {
                 <ul>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/posts">Posts</Link></li>
-                    <li><Link to="/create-post">Create Post</Link></li>
-                    <li><Link to="/my-team-posts">Posts About My Team</Link></li>
-                    <li><Link to="/my-posts">My Posts</Link></li>
+                    {user && ( 
+                        <>
+                            <li><Link to="/create-post">Create Post</Link></li>
+                            <li><Link to={`/posts/${user.favoriteTeam}`}>Posts About My Team</Link></li>
+                            <li><Link to="/my-posts">My Posts</Link></li>
+                        </>
+                    )}
                 </ul>
             </div>
 
             <div className="nav-right">
                 <ul>
-                    <li><Link to="/login">Log in</Link></li>
-                    <li><Link to="/register">Register</Link></li>
-                    <li><Link to="/profile">Profile</Link></li>
-                    <li><Link to="/logout">Logout</Link></li>
+                    {!user ? ( 
+                        <>
+                            <li><Link to="/login">Log in</Link></li>
+                            <li><Link to="/register">Register</Link></li>
+                        </>
+                    ) : (
+                        <>
+                            <li><Link to={`/profile/${user._id}`}>{user.username}'s Profile</Link></li>
+                            <li><Link to="/logout">Logout</Link></li>
+                        </>
+                    )}
                 </ul>
             </div>
 
@@ -50,13 +63,24 @@ export default function Header() {
                 <ul>
                     <li><Link to="/" onClick={closeMenu}>Home</Link></li>
                     <li><Link to="/posts" onClick={closeMenu}>Posts</Link></li>
-                    <li><Link to="/create-post" onClick={closeMenu}>Create Post</Link></li>
-                    <li><Link to="/my-team-posts" onClick={closeMenu}>Posts About My Team</Link></li>
-                    <li><Link to="/my-posts" onClick={closeMenu}>My Posts</Link></li>
-                    <li><Link to="/login" onClick={closeMenu}>Log in</Link></li>
-                    <li><Link to="/register" onClick={closeMenu}>Register</Link></li>
-                    <li><Link to="/profile" onClick={closeMenu}>Profile</Link></li>
-                    <li><Link to="/logout" onClick={closeMenu}>Logout</Link></li>
+                    {user && (
+                        <>
+                            <li><Link to="/create-post" onClick={closeMenu}>Create Post</Link></li>
+                            <li><Link to={`/posts/${user.favoriteTeam}`} onClick={closeMenu}>Posts About My Team</Link></li>
+                            <li><Link to="/my-posts" onClick={closeMenu}>My Posts</Link></li>
+                        </>
+                    )}
+                    {!user ? (
+                        <>
+                            <li><Link to="/login" onClick={closeMenu}>Log in</Link></li>
+                            <li><Link to="/register" onClick={closeMenu}>Register</Link></li>
+                        </>
+                    ) : (
+                        <>
+                            <li><Link to={`/profile/${user._id}`} onClick={closeMenu}>Profile</Link></li>
+                            <li><Link to="/logout" onClick={closeMenu}>Logout</Link></li>
+                        </>
+                    )}
                 </ul>
             </div>
         </nav>

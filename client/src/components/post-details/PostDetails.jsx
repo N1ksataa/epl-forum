@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import "./PostDetails.css";
 
 export default function PostDetails() {
-    const { postId } = useParams();
+    const { postId, teamId } = useParams();
     const [post, setPost] = useState(null);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -18,6 +18,11 @@ export default function PostDetails() {
                 }
 
                 const data = await response.json();
+
+                if (data.team._id !== teamId) {
+                    throw new Error("Team ID mismatch");
+                }
+
                 setPost(data);
             } catch (error) {
                 setError(error.message);
@@ -26,7 +31,7 @@ export default function PostDetails() {
         }
 
         fetchPost();
-    }, [postId, navigate]);
+    }, [postId, teamId, navigate]);
 
     if (!post) {
         return <div>Post not found</div>;
@@ -50,7 +55,7 @@ export default function PostDetails() {
                 </span>
                 <span> | Team: {post.team.name}</span>
                 <span> | Last updated: {new Date(post.updatedAt).toLocaleString()}</span>
-                    <button onClick={handleEditPost}>Edit Post</button>
+                <button onClick={handleEditPost}>Edit Post</button>
             </div>
 
             <h3>Replies</h3>
@@ -59,9 +64,9 @@ export default function PostDetails() {
                     <li key={comment._id} className="comment">
                         <p>{comment.text}</p>
                         <span>
-                            By <Link to={`/profile/${comment.userId.username}`}>{comment.userId.username}</Link> | {new Date(comment.createdAt).toLocaleString()}
+                            By <Link to={`/profile/${comment.userId._id}`}>{comment.userId.username}</Link> | {new Date(comment.createdAt).toLocaleString()}
                         </span>
-                            <button onClick={() => handleEditComment(comment._id)}>Edit Comment</button>
+                        <button onClick={() => handleEditComment(comment._id)}>Edit Comment</button>
                     </li>
                 ))}
             </ul>

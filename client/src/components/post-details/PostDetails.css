@@ -10,6 +10,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.post-details a {
+    text-decoration: none;
+    color: #e100ffd3;
+    font-weight: bold;
+}
+
 .post-title {
     font-size: 26px;
     margin-bottom: 10px;

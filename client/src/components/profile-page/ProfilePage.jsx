@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
 
 export default function ProfilePage() {
     const { userId } = useParams();
     const [user, setUser] = useState(null);
+    const [error, setError] = useState(null);
     const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         async function fetchData() {
@@ -19,7 +21,8 @@ export default function ProfilePage() {
                 const postsData = await postsRes.json();
                 setPosts(postsData);
             } catch (error) {
-                console.error("Error fetching profile data:", error);
+                setError(error.message);
+                navigate("/404");
             }
         }
 
