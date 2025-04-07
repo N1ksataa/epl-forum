@@ -75,31 +75,31 @@ async getUserById(id) {
     return user;
 },
 
-    async updateUser(id, data) {
-        const user = await User.findById(id);
-        if (!user) {
-            throw new Error('User not found');
-        }
+async updateUser(id, data) {
+    const user = await User.findById(id);
+    if (!user) {
+        throw new Error('User not found');
+    }
 
-        if (data.username && data.username !== user.username) {
-            const existingUsername = await User.findOne({ username: data.username });
-            if (existingUsername) {
-                throw new Error('Username already exists');
-            }
-            user.username = data.username;
+    if (data.username && data.username !== user.username) {
+        const existingUsername = await User.findOne({ username: data.username });
+        if (existingUsername) {
+            throw new Error('Username already exists');
         }
+        user.username = data.username;
+    }
 
-        if (data.email && data.email !== user.email) {
-            const existingEmail = await User.findOne({ email: data.email });
-            if (existingEmail) {
-                throw new Error('Email already exists');
-            }
-            user.email = data.email;
+    if (data.email && data.email !== user.email) {
+        const existingEmail = await User.findOne({ email: data.email });
+        if (existingEmail) {
+            throw new Error('Email already exists');
         }
+        user.email = data.email;
+    }
 
-        await user.save();
-        return { username: user.username, email: user.email };
-    },
+    await user.save();
+    return { username: user.username, email: user.email };
+},
 
     async updatePassword(id, oldPassword, newPassword) {
         const user = await User.findById(id);

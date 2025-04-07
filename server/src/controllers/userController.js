@@ -66,23 +66,26 @@ userController.get('/profile', authMiddleware, async (req, res) => {
 
 userController.put('/profile', authMiddleware, async (req, res) => {
     const { username, email } = req.body;
-
     try {
         const updatedUser = await userService.updateUser(req.user.id, { username, email });
-        res.json(updatedUser);
+        console.log('Updated User:', updatedUser);
+        res.status(200).json({ username: updatedUser.username, email: updatedUser.email });
     } catch (err) {
-        res.json({ message: err.message });
+        console.error("Error:", err);
+        res.status(400).json({ message: err.message });
     }
 });
+
+
 
 userController.put('/profile/update-password', authMiddleware, async (req, res) => {
     const { oldPassword, newPassword } = req.body;
 
     try {
         await userService.updatePassword(req.user.id, oldPassword, newPassword);
-        res.json({ message: 'Password updated successfully' });
+        res.status(200).json({ message: 'Password updated successfully' });
     } catch (err) {
-        res.json({ message: err.message });
+        res.status(400).json({ message: err.message });
     }
 });
 

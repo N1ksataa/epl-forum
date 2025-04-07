@@ -64,6 +64,10 @@
   .user-dashboard .confirm:hover {
     background-color: #45a049;
   }
+
+  .user-dashboard .confirm:hover:disabled {
+    background-color: #d3d3d3;
+  }
   
   .confirm:disabled {
     background-color: #d3d3d3;

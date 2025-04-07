@@ -2,7 +2,7 @@ const request = async (method, url, data = null, token = null) => {
     const headers = {};
 
     if (token) {
-        headers['X-Authorization'] = token;
+        headers['Authorization'] = `Bearer ${token}`;
     }
 
     if (data && method !== 'GET') {
@@ -27,7 +27,8 @@ const request = async (method, url, data = null, token = null) => {
 
     const contentType = response.headers.get('Content-Type');
     if (contentType && contentType.includes('application/json')) {
-        return await response.json();
+        const text = await response.text();
+        return text ? JSON.parse(text) : null;
     }
 
     return null;

@@ -38,6 +38,7 @@ export const useRegister = () => {
 
     return { register };
 };
+
 export const useLogout = () => {
     const { logout } = useUserContext();
 
@@ -48,4 +49,49 @@ export const useLogout = () => {
     };
 
     return { logoutUser };
+};
+
+export const useUpdateProfile = () => {
+    const { updateUser, authToken } = useUserContext();
+
+    const updateProfile = async (username, email) => {
+        try {
+            const response = await request.put(`${baseUrl}/profile`, { username, email }, authToken);
+
+            if (response.error) {
+                throw new Error('Failed to update profile');
+            }
+
+            const { user } = response;
+            updateUser(user, authToken);
+
+            return user;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    };
+
+    return { updateProfile };
+};
+
+export const useUpdatePassword = () => {
+    const { user, authToken } = useUserContext();
+
+    const updatePassword = async (oldPassword, newPassword) => {
+        try {
+            const response = await request.put(`${baseUrl}/profile/update-password`, { oldPassword, newPassword }, authToken);
+
+            if (response.error) {
+                throw new Error('Failed to update password');
+            }
+
+            return response.message;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    };
+
+    return { updatePassword };
 };

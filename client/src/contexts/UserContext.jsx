@@ -1,29 +1,51 @@
-import { createContext, useContext } from 'react';
-import usePersistedState from '../hooks/usePersistedState';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const UserContext = createContext();
 
-export function UserProvider({ children }) {
-    const [user, setUser] = usePersistedState('user', null);
-    const [authToken, setAuthToken] = usePersistedState('authToken', '');
+export const useUserContext = () => {
+    return useContext(UserContext);
+};
 
-    const login = (userData, token) => {
-        setUser(userData);
+export const UserProvider = ({ children }) => {
+
+    const storedUser = localStorage.getItem('user');
+    const [user, setUser] = useState(storedUser && storedUser !== 'undefined' ? JSON.parse(storedUser) : null);
+
+    const [authToken, setAuthToken] = useState(
+        localStorage.getItem('authToken') && localStorage.getItem('authToken') !== 'undefined' ? localStorage.getItem('authToken') : null
+    );
+
+    useEffect(() => {
+        if (authToken) {
+            const storedUser = localStorage.getItem('user');
+            setUser(storedUser && storedUser !== 'undefined' ? JSON.parse(storedUser) : null);
+        }
+    }, [authToken]);
+
+    const updateUser = (updatedFields) => {
+        const currentUser = localStorage.getItem('user');
+        const newUser = currentUser ? { ...JSON.parse(currentUser), ...updatedFields } : updatedFields;
+        setUser(newUser);
+        localStorage.setItem('user', JSON.stringify(newUser));
+    };
+
+    const login = (user, token) => {
+        setUser(user);
         setAuthToken(token);
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('authToken', token);
     };
 
     const logout = () => {
         setUser(null);
-        setAuthToken('');
+        setAuthToken(null);
+        localStorage.removeItem('user');
+        localStorage.removeItem('authToken');
     };
 
     return (
-        <UserContext.Provider value={{ user, authToken, login, logout }}>
+        <UserContext.Provider value={{ user, authToken, login, logout, updateUser }}>
             {children}
         </UserContext.Provider>
     );
-}
-
-export const useUserContext = () => useContext(UserContext);
-
-export { UserContext };
+};
