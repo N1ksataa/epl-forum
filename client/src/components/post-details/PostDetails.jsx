@@ -1,24 +1,22 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import request from "../../utils/request.js";
+import { useUserContext } from "../../contexts/UserContext.jsx";
 import "./PostDetails.css";
 
 export default function PostDetails() {
     const { postId, teamId } = useParams();
     const [post, setPost] = useState(null);
     const [error, setError] = useState(null);
+    const [newComment, setNewComment] = useState('');
+    const { user, authToken } = useUserContext();
     const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchPost() {
             try {
-                const response = await fetch(`http://localhost:5000/api/posts/${postId}`);
+                const data = await request.get(`http://localhost:5000/api/posts/${postId}`);
                 
-                if (!response.ok) {
-                    throw new Error('Post not found');
-                }
-
-                const data = await response.json();
-
                 if (data.team._id !== teamId) {
                     throw new Error("Team ID mismatch");
                 }
@@ -33,11 +31,7 @@ export default function PostDetails() {
         fetchPost();
     }, [postId, teamId, navigate]);
 
-    if (!post) {
-        return <div>Post not found</div>;
-    }
-
-    const handleEditPost = () => {
+    const handleEditPost = (postId) => {
         navigate(`/edit-post/${postId}`);
     };
 
@@ -45,17 +39,77 @@ export default function PostDetails() {
         navigate(`/edit-comment/${commentId}`);
     };
 
+    const handleDeletePost = async (postId) => {
+        try {
+            await request.delete(`http://localhost:5000/api/posts/${postId}`, authToken);
+            navigate(`/posts/${teamId}`);
+        } catch (err) {
+            setError('Error deleting post');
+        }
+    };
+
+    const handleDeleteComment = async (postId, commentId) => {
+        try {
+            await request.delete(`http://localhost:5000/api/posts/${postId}/comments/${commentId}`, authToken);
+            setPost((prevPost) => ({
+                ...prevPost,
+                comments: prevPost.comments.filter((comment) => comment._id !== commentId),
+            }));
+        } catch (err) {
+            setError('Error deleting comment');
+        }
+    };
+    
+    const handleCommentSubmit = async () => {
+        if (newComment.trim()) {
+            try {
+
+                const newCommentData = await request.post(
+                    `http://localhost:5000/api/posts/${postId}/comments`,
+                    { text: newComment },
+                    authToken
+                );
+    
+
+                setPost((prevPost) => ({
+                    ...prevPost,
+                    comments: [...prevPost.comments, newCommentData],
+                }));
+    
+                setNewComment('');
+            } catch (error) {
+                setError('Failed to add comment');
+            }
+        }
+    };
+    
+
+    if (error) {
+        return <div className="error-message">{error}</div>;
+    }
+
+    if (!post) {
+        return <div>Post not found</div>;
+    }
+
     return (
         <div className="post-details">
-            <h2 className="post-title">{post.title}</h2>
-            <p className="post-content">{post.content}</p>
-            <div className="post-meta">
-                <span>
-                    By <Link to={`/profile/${post.author._id}`}>{post.author.username}</Link>
-                </span>
-                <span> | Team: {post.team.name}</span>
-                <span> | Last updated: {new Date(post.updatedAt).toLocaleString()}</span>
-                <button onClick={handleEditPost}>Edit Post</button>
+            <div className="post-header">
+                <h2 className="post-title">{post.title}</h2>
+                <div className="post-meta">
+                    <span>
+                        By <Link to={`/profile/${post.author._id}`}>{post.author.username}</Link>
+                    </span>
+                    <span> | Team: {post.team.name}</span>
+                    <span> | Last updated: {new Date(post.updatedAt).toLocaleString()}</span>
+                </div>
+                <p className="post-content">{post.content}</p>
+                {user?._id === post.author._id && (
+                        <div className="post-actions">
+                            <button onClick={() => handleEditPost(post._id)}></button>
+                            <button onClick={() => handleDeletePost(post._id)}></button>
+                        </div>
+                    )}
             </div>
 
             <h3>Replies</h3>
@@ -63,13 +117,28 @@ export default function PostDetails() {
                 {post.comments.map((comment) => (
                     <li key={comment._id} className="comment">
                         <p>{comment.text}</p>
+                        {user?._id === comment.userId._id && (
+                            <div className="comment-actions">
+                                <button onClick={() => handleEditComment(post._id, comment._id)}></button>
+                                <button onClick={() => handleDeleteComment(post._id, comment._id)}></button>
+                            </div>
+                        )}
                         <span>
                             By <Link to={`/profile/${comment.userId._id}`}>{comment.userId.username}</Link> | {new Date(comment.createdAt).toLocaleString()}
                         </span>
-                        <button onClick={() => handleEditComment(comment._id)}>Edit Comment</button>
+
                     </li>
                 ))}
             </ul>
+
+            <div className="new-comment">
+                <textarea
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    placeholder="Write a comment..."
+                />
+                <button onClick={handleCommentSubmit} disabled={!newComment.trim()}>Submit Comment</button>
+            </div>
         </div>
     );
 }

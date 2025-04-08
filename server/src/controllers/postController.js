@@ -59,9 +59,11 @@ postController.delete("/:id", authMiddleware, async (req, res) => {
         const deletedPost = await postService.deletePost(postId, userId);
         res.json({ message: "Post deleted successfully", post: deletedPost });
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        const isAuthError = err.message.includes("not authorized");
+        res.status(isAuthError ? 403 : 500).json({ message: err.message });
     }
 });
+
 
 
 postController.get("/user/:userId", async (req, res) => {
@@ -89,16 +91,27 @@ postController.get("/team/:teamId", async (req, res) => {
 
 postController.post("/:id/comments", authMiddleware, async (req, res) => {
     const { id: postId } = req.params;
-    const { commentText } = req.body;
+    const { text: commentText } = req.body;
     const userId = req.user.id;
 
     try {
         const comment = await postService.addComment(postId, userId, commentText);
-        res.json(comment);
+        
+
+        const commentWithUser = {
+            ...comment.toObject(),
+            userId: {
+                _id: req.user.id,
+                username: req.user.username,
+            },
+        };
+
+        res.json(commentWithUser);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 postController.put("/:postId/comments/:commentId", authMiddleware, async (req, res) => {
     const { postId, commentId } = req.params;
@@ -121,7 +134,8 @@ postController.delete("/:postId/comments/:commentId", authMiddleware, async (req
         await postService.deleteComment(postId, commentId, userId);
         res.json({ message: "Comment deleted successfully" });
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        const isAuthError = err.message.includes("not authorized");
+        res.status(isAuthError ? 403 : 500).json({ message: err.message });
     }
 });
 

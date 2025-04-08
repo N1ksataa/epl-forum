@@ -68,7 +68,6 @@ userController.put('/profile', authMiddleware, async (req, res) => {
     const { username, email } = req.body;
     try {
         const updatedUser = await userService.updateUser(req.user.id, { username, email });
-        console.log('Updated User:', updatedUser);
         res.status(200).json({ username: updatedUser.username, email: updatedUser.email });
     } catch (err) {
         console.error("Error:", err);

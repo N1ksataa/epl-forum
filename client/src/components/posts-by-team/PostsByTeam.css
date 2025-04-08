@@ -18,6 +18,11 @@
     margin-bottom: 20px;
 }
 
+.posts-container .post-meta a{
+    color: #e100ffd3;
+    text-decoration: none;
+}
+
 .posts-container .team-header h2 {
     font-size: 33px;
     text-align: center;

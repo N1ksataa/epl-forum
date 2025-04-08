@@ -4,10 +4,18 @@
     margin: auto;
     padding: 20px;
     margin-top: 40px;
+    margin-bottom: 100px;
     background: white;
     border-radius: 10px;
     border: 1px solid black;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.post-header {
+    border-radius: 10px;
+    border: 2px solid black;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .post-details a {
@@ -23,13 +31,71 @@
 
 .post-content {
     font-size: 18px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
-.post-meta {
+.post-details .post-meta {
     font-size: 14px;
     color: gray;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+.post-actions button, .comment-actions button {
+    background-color: white;
+    border: 1px solid black;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    padding: 10px;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+}
+
+.post-actions button {
+    margin-bottom: 0;
+}
+
+.comment-actions button {
+    width: 30px;
+    height: 30px;
+}
+
+
+.post-actions button:first-child, .comment-actions button:first-child {
+    color: white;
+    background-color: #4CAF50;
+    margin-left: 0;
+}
+
+.post-actions button:last-child, .comment-actions button:last-child {
+    color: white;
+    background-color: #f44336;
+}
+
+.post-actions button:first-child:hover, .comment-actions button:first-child:hover {
+    opacity: 0.8;
+}
+
+.post-actions button:last-child:hover, .comment-actions button:last-child:hover {
+    opacity: 0.8;
+}
+
+.post-actions button:first-child::before, .comment-actions button:first-child::before {
+    content: '\270E';
+    font-size: 25px;
+}
+
+.post-actions button:last-child::before, .comment-actions button:last-child::before {
+    content: '\1F5D1';
+    font-size: 25px;
+}
+
+.comment-actions button:first-child::before, .comment-actions button:last-child::before {
+    font-size: 20px;
 }
 
 .comments-list {
@@ -39,15 +105,14 @@
 
 .comment {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.comment:last-child {
-    border-bottom: none;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-bottom: 10px;
 }
 
 .comment p {
     font-size: 16px;
+    margin-bottom: 5px;
 }
 
 .comment span {
@@ -55,22 +120,26 @@
     color: gray;
 }
 
-.post-details button {
-    padding: 8px 0;
+.new-comment textarea {
+    width: 99%;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.new-comment button {
+    margin-top: 10px;
+    padding: 8px 16px;
     background-color: #4CAF50;
     color: white;
-    border: none;
-    border-radius: 5px;
     border: 1px solid black;
+    border-radius: 5px;
     cursor: pointer;
-    margin-left: 10px;
 }
 
-.post-details button:hover {
-    background-color: #45a049;
-}
-
-.post-details button:disabled {
+.new-comment button:disabled {
     background-color: #d3d3d3;
     cursor: not-allowed;
 }

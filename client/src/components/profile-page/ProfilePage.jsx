@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { useUserContext } from "../../contexts/UserContext";
 import "./ProfilePage.css";
 
 export default function ProfilePage() {
@@ -9,6 +10,7 @@ export default function ProfilePage() {
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
 
+    const { user: loggedUser } = useUserContext();
 
     useEffect(() => {
         async function fetchData() {
@@ -29,7 +31,6 @@ export default function ProfilePage() {
         fetchData();
     }, [userId]);
 
-
     return (
         <div className="profile-container">
             {user ? (
@@ -42,7 +43,9 @@ export default function ProfilePage() {
                                 Favorite Team: {user.favoriteTeam.name}
                             </p>
                         )}
-                        <Link to="/edit-profile" className="edit-profile-btn">Edit Profile</Link>
+                        {loggedUser?._id === user._id && (
+                            <Link to="/edit-profile" className="edit-profile-btn">Edit Profile</Link>
+                        )}
                     </div>
 
                     <h3>Recent Posts</h3>
@@ -52,7 +55,7 @@ export default function ProfilePage() {
                                 <li key={post._id} className="post-item">
                                     <div className="post-content">
                                         <Link to={`/posts/${post.team._id}/${post._id}`} className="post-title">
-                                            {post.title}
+                                            {post.title.length > 40 ? post.title.slice(0, 37) + "..." : post.title}
                                         </Link>
                                         <p className="post-meta">
                                             By {post.author.username} on {new Date(post.createdAt).toLocaleDateString()}

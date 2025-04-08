@@ -45,10 +45,10 @@ export default function PostsByTeam() {
                             <li key={post._id} className="post-item">
                                 <div className="post-content">
                                     <Link to={`/posts/${teamId}/${post._id}`} className="post-title">
-                                        {post.title}
+                                        {post.title.length > 40 ? post.title.slice(0, 37) + "..." : post.title}
                                     </Link>
                                     <p className="post-meta">
-                                        By {post.author.username} on {new Date(post.createdAt).toLocaleDateString()}
+                                        By <Link to={`/profile/${post.author._id}`}>{post.author.username}</Link> on {new Date(post.createdAt).toLocaleDateString()}
                                     </p>
                                 </div>
 

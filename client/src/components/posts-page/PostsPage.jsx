@@ -43,7 +43,7 @@ export default function PostsPage() {
                                 <div className="post-stats">
                                     <span>Posts: {forum.postCount}</span>
                                     <span>Comments: {forum.commentCount}</span>
-                                    
+
                                 </div>
                                 <div className="last-post">
                                     {forum.lastPost ? (
@@ -94,9 +94,13 @@ export default function PostsPage() {
                     <ul>
                         {trendingPosts.map(post => (
                             <li key={post._id}>
-                                <Link to={`/post/${post._id}`}>{post.title}</Link> - {post.commentCount} Comments
+                                <Link to={`/post/${post._id}`}>
+                                    {post.title.length > 30 ? post.title.substring(0, 27) + '...' : post.title}
+                                </Link>
+                                &nbsp;- {post.commentCount} Comments
                             </li>
                         ))}
+
                     </ul>
                 </section>
 

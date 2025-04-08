@@ -1,4 +1,4 @@
-const request = async (method, url, data = null, token = null) => {
+const request = async (method, url, data = null, token = null, logout = null) => {
     const headers = {};
 
     if (token) {
@@ -21,8 +21,12 @@ const request = async (method, url, data = null, token = null) => {
     const response = await fetch(url, options);
 
     if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message);
+        if (response.status === 401 && typeof logout === 'function') {
+            logout();
+        }
+
+        const error = await response.json().catch(() => ({ message: 'Unknown error' }));
+        throw new Error(error.message || 'Request failed');
     }
 
     const contentType = response.headers.get('Content-Type');
@@ -35,8 +39,8 @@ const request = async (method, url, data = null, token = null) => {
 };
 
 export default {
-    get: (url, token) => request('GET', url, null, token),
-    post: (url, data, token) => request('POST', url, data, token),
-    put: (url, data, token) => request('PUT', url, data, token),
-    delete: (url, token) => request('DELETE', url, null, token),
+    get: (url, token, logout) => request('GET', url, null, token, logout),
+    post: (url, data, token, logout) => request('POST', url, data, token, logout),
+    put: (url, data, token, logout) => request('PUT', url, data, token, logout),
+    delete: (url, token, logout) => request('DELETE', url, null, token, logout),
 };
