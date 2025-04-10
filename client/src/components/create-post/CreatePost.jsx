@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import request from "../../utils/request.js";
+import { createPost } from "../../api/postApi.js";
+import { getForums } from "../../api/forumApi.js";
 import { useUserContext } from "../../contexts/UserContext";
 import './CreatePost.css';
 
@@ -17,7 +18,7 @@ export default function CreatePost() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        request.get("http://localhost:5000/api/forum")
+        getForums()
             .then(data => {
                 const teamsData = data.map(item => item.team);
                 setTeams(teamsData);
@@ -77,8 +78,7 @@ export default function CreatePost() {
         }
 
         try {
-            await request.post(
-                "http://localhost:5000/api/posts",
+            await createPost(
                 {
                     title: formData.title,
                     content: formData.content,

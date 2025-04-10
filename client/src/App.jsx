@@ -42,7 +42,7 @@ function App() {
                         <Route path="/create-post" element={<CreatePost />} />
                         <Route path="/edit-profile" element={<EditProfile />} />
                         <Route path="/edit-post/:postId" element={<EditPost />} />
-                        <Route path="/posts/:postId/comments/:commentId/edit" element={<EditComment />} />
+                        <Route path="/edit-comment/:postId/:commentId/" element={<EditComment />} />
                         <Route path="/logout" element={<Logout />} />
                     </Route>
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Standings from './standings/Standings';
+import { getForums, getForumStats, getTrendingPosts } from '../../api/forumApi.js';
 import './PostsPage.css';
 
 export default function PostsPage() {
@@ -9,20 +10,22 @@ export default function PostsPage() {
     const [trendingPosts, setTrendingPosts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/forum')
-            .then(response => response.json())
-            .then(data => setForums(data))
-            .catch(error => console.error('Error fetching forums:', error));
+        const fetchData = async () => {
+            try {
+                const forumsData = await getForums();
+                setForums(forumsData);
 
-        fetch('http://localhost:5000/api/forum/stats')
-            .then(response => response.json())
-            .then(data => setStats(data))
-            .catch(error => console.error('Error fetching stats:', error));
+                const statsData = await getForumStats();
+                setStats(statsData);
 
-        fetch('http://localhost:5000/api/forum/trending')
-            .then(response => response.json())
-            .then(data => setTrendingPosts(data))
-            .catch(error => console.error('Error fetching trending posts:', error));
+                const trendingPostsData = await getTrendingPosts();
+                setTrendingPosts(trendingPostsData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     return (

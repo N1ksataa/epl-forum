@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import request from "../../utils/request.js";
+import { getPostById, editPost } from "../../api/postApi.js";
 import { useUserContext } from "../../contexts/UserContext.jsx";
 import '../create-post/CreatePost.css';
 
@@ -13,14 +13,20 @@ export default function EditPost() {
     const [selectedTeamName, setSelectedTeamName] = useState("");
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
-    const { authToken } = useUserContext();
+    const { authToken, user } = useUserContext();
     const { postId } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchPost() {
             try {
-                const data = await request.get(`http://localhost:5000/api/posts/${postId}`);
+                const data = await getPostById(postId);
+
+                if (user._id !== data.author._id) {
+                    navigate("/404");
+                    return;
+                }
+
                 setFormData({
                     team: data.team._id,
                     title: data.title,
@@ -33,8 +39,10 @@ export default function EditPost() {
             }
         }
 
-        fetchPost();
-    }, [postId, navigate]);
+        if (user) {
+            fetchPost();
+        }
+    }, [postId, navigate, user]);
 
     const validate = (field, value) => {
         switch (field) {
@@ -85,8 +93,8 @@ export default function EditPost() {
         }
 
         try {
-            await request.put(
-                `http://localhost:5000/api/posts/${postId}`,
+            await editPost(
+                postId,
                 {
                     title: formData.title,
                     content: formData.content,

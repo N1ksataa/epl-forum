@@ -112,7 +112,7 @@ postController.post("/:id/comments", authMiddleware, async (req, res) => {
     }
 });
 
-postController.get("/:postId/comments/:commentId", authMiddleware, async (req, res) => {
+postController.get("/:postId/comments/:commentId", async (req, res) => {
     const { postId, commentId } = req.params;
 
     try {

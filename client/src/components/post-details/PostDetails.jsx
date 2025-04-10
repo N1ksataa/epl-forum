@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import request from "../../utils/request.js";
 import { useUserContext } from "../../contexts/UserContext.jsx";
+import { getPostById, deletePost, deleteComment, createComment } from "../../api/postApi.js";
 import "./PostDetails.css";
 
 export default function PostDetails() {
@@ -15,7 +15,7 @@ export default function PostDetails() {
     useEffect(() => {
         async function fetchPost() {
             try {
-                const data = await request.get(`http://localhost:5000/api/posts/${postId}`);
+                const data = await getPostById(postId);
 
                 if (data.team._id !== teamId) {
                     throw new Error("Team ID mismatch");
@@ -36,12 +36,12 @@ export default function PostDetails() {
     };
 
     const handleEditComment = (postId, commentId) => {
-        navigate(`/posts/${postId}/comments/${commentId}/edit`);
+        navigate(`/edit-comment/${postId}/${commentId}`);
     };
 
     const handleDeletePost = async (postId) => {
         try {
-            await request.delete(`http://localhost:5000/api/posts/${postId}`, authToken);
+            await deletePost(postId, authToken);
             navigate(`/posts/${teamId}`);
         } catch (err) {
             setError('Error deleting post');
@@ -50,7 +50,7 @@ export default function PostDetails() {
 
     const handleDeleteComment = async (postId, commentId) => {
         try {
-            await request.delete(`http://localhost:5000/api/posts/${postId}/comments/${commentId}`, authToken);
+            await deleteComment(postId, commentId, authToken);
             setPost((prevPost) => ({
                 ...prevPost,
                 comments: prevPost.comments.filter((comment) => comment._id !== commentId),
@@ -63,13 +63,7 @@ export default function PostDetails() {
     const handleCommentSubmit = async () => {
         if (newComment.trim()) {
             try {
-
-                const newCommentData = await request.post(
-                    `http://localhost:5000/api/posts/${postId}/comments`,
-                    { text: newComment },
-                    authToken
-                );
-
+                const newCommentData = await createComment(postId, newComment, authToken);
 
                 setPost((prevPost) => ({
                     ...prevPost,

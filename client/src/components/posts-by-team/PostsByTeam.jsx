@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { getPostsByTeam } from "../../api/postApi";
 import "./PostsByTeam.css";
 
 export default function PostsByTeam() {
@@ -9,20 +10,20 @@ export default function PostsByTeam() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/posts/team/${teamId}`)
-            .then((res) => {
-                if (!res.ok) {
-                    navigate("/404");
-                }
-                return res.json();
-            })
-            .then((data) => {
+        const fetchPosts = async () => {
+            try {
+                const data = await getPostsByTeam(teamId);
                 setPosts(data);
                 if (data.length > 0) {
                     setTeam(data[0].team);
                 }
-            })
-            .catch((err) => console.error("Failed to fetch posts", err));
+            } catch (error) {
+                console.error('Failed to fetch posts:', error);
+                navigate('/404');
+            }
+        };
+
+        fetchPosts();
     }, [teamId, navigate]);
 
 
