@@ -81,6 +81,10 @@ async updateUser(id, data) {
         throw new Error('User not found');
     }
 
+    if (data.username === user.username && data.email === user.email) {
+        throw new Error('No changes detected');
+    }
+
     if (data.username && data.username !== user.username) {
         const existingUsername = await User.findOne({ username: data.username });
         if (existingUsername) {
@@ -105,6 +109,10 @@ async updateUser(id, data) {
         const user = await User.findById(id);
         if (!user || !(await user.comparePassword(oldPassword))) {
             throw new Error('Invalid old password');
+        }
+
+        if (oldPassword === newPassword) {
+            throw new Error('New password must be different from the old password');
         }
 
         user.password = newPassword;

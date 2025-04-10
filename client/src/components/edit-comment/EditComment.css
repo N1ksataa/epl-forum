@@ -1,0 +1,57 @@
+.edit-comment-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid black;
+    background-color: rgba(247, 247, 247, 0.945);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 350px;
+    z-index: 2;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+textarea {
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-family: 'Aleo', serif;
+    resize: none;
+    height: 100px;
+}
+
+button {
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 130px;
+    margin: 0 auto;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.error {
+    color: red;
+    margin: auto;
+    font-size: 16px;
+}

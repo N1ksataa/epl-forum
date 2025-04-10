@@ -49,3 +49,34 @@
 .explore-button:hover {
     background-color: #45a049;
 }
+
+@media (max-width: 700px) {
+    .home-container {
+        padding: 20px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .home-container h1 {
+        font-size: 50px;
+        white-space: normal;
+    }
+
+    .home-container h2 {
+        font-size: 38px;
+    }
+
+    .home-container p {
+        font-size: 18px;
+    }
+
+    .explore-button {
+        font-size: 18px;
+        padding: 10px 20px;
+    }
+}

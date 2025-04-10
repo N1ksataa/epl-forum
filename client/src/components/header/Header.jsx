@@ -31,7 +31,6 @@ export default function Header() {
                         <>
                             <li><Link to="/create-post">Create Post</Link></li>
                             <li><Link to={`/posts/${user.favoriteTeam}`}>Posts About My Team</Link></li>
-                            <li><Link to="/my-posts">My Posts</Link></li>
                         </>
                     )}
                 </ul>
@@ -67,7 +66,6 @@ export default function Header() {
                         <>
                             <li><Link to="/create-post" onClick={closeMenu}>Create Post</Link></li>
                             <li><Link to={`/posts/${user.favoriteTeam}`} onClick={closeMenu}>Posts About My Team</Link></li>
-                            <li><Link to="/my-posts" onClick={closeMenu}>My Posts</Link></li>
                         </>
                     )}
                     {!user ? (

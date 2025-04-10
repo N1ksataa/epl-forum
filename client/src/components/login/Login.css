@@ -86,3 +86,32 @@
     background-color: gray;
     cursor: not-allowed;
   }
+
+  @media (max-width: 460px) {
+    .login-container {
+      width: 80%;
+    }
+  
+    label {
+      font-size: 16px;
+    }
+  
+    input {
+      padding: 12px;
+      font-size: 14px;
+    }
+  
+    input::placeholder {
+      font-size: 14px;
+    }
+  
+  
+    .signup-text {
+      font-size: 15px;
+    }
+  
+    .error-text {
+      font-size: 14px;
+    }
+  }
+  

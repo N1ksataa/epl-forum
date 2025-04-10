@@ -101,82 +101,88 @@ export default function Register() {
     };
 
     return (
-        <div className="register-container">
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={formData.email}
-                    required
-                />
-                {formErrors.email && <span className="error-text">{formErrors.email}</span>}
+        <div className="register-wrapper">
+            <div className="register-container">
+                <h2>Register</h2>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        autoComplete="email"
+                        placeholder="Enter your email"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={formData.email}
+                        required
+                    />
+                    {formErrors.email && <span className="error-text">{formErrors.email}</span>}
 
-                <label htmlFor="username">Username:</label>
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Choose a username"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={formData.username}
-                    required
-                />
-                {formErrors.username && <span className="error-text">{formErrors.username}</span>}
+                    <label htmlFor="username">Username:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        autoComplete="username"
+                        placeholder="Enter your username"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={formData.username}
+                        required
+                    />
+                    {formErrors.username && <span className="error-text">{formErrors.username}</span>}
 
-                <label htmlFor="favoriteTeam">Favorite Team:</label>
-                <select
-                    id="favoriteTeam"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={formData.favoriteTeam}
-                    required
-                >
-                    <option value="" disabled>Select your favorite team</option>
-                    {teams.map((team) => (
-                        <option key={team._id} value={team._id}>
-                            {team.name}
-                        </option>
-                    ))}
-                </select>
-                {formErrors.favoriteTeam && <span className="error-text">{formErrors.favoriteTeam}</span>}
+                    <label htmlFor="favoriteTeam">Favorite Team:</label>
+                    <select
+                        id="favoriteTeam"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={formData.favoriteTeam}
+                        required
+                    >
+                        <option value="" disabled>Select your favorite team</option>
+                        {teams.map((team) => (
+                            <option key={team._id} value={team._id}>
+                                {team.name}
+                            </option>
+                        ))}
+                    </select>
+                    {formErrors.favoriteTeam && <span className="error-text">{formErrors.favoriteTeam}</span>}
 
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Create a password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={formData.password}
-                    required
-                />
-                {formErrors.password && <span className="error-text">{formErrors.password}</span>}
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        autoComplete="password"
+                        placeholder="Create a password"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={formData.password}
+                        required
+                    />
+                    {formErrors.password && <span className="error-text">{formErrors.password}</span>}
 
-                <label htmlFor="rePassword">Confirm Password:</label>
-                <input
-                    type="password"
-                    id="rePassword"
-                    placeholder="Repeat your password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={formData.rePassword}
-                    required
-                />
-                {formErrors.rePassword && <span className="error-text">{formErrors.rePassword}</span>}
+                    <label htmlFor="rePassword">Confirm Password:</label>
+                    <input
+                        type="password"
+                        id="rePassword"
+                        autoComplete="rePassword"
+                        placeholder="Repeat your password"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={formData.rePassword}
+                        required
+                    />
+                    {formErrors.rePassword && <span className="error-text">{formErrors.rePassword}</span>}
 
-                <button type="submit" disabled={!isFormValid || loading}>
-                    {loading ? "Registering..." : "Sign Up"}
-                </button>
-            </form>
+                    <button type="submit" disabled={!isFormValid || loading}>
+                        {loading ? "Registering..." : "Sign Up"}
+                    </button>
+                </form>
 
-            <p className="signup-text">
-                Already have an account? <Link to="/login">Log in</Link>
-            </p>
+                <p className="signup-text">
+                    Already have an account? <Link to="/login">Log in</Link>
+                </p>
+            </div>
         </div>
     );
 }

@@ -83,13 +83,28 @@ class ForumService {
                     }
                 },
                 {
+                    $lookup: {
+                        from: "teams",
+                        localField: "team",
+                        foreignField: "_id",
+                        as: "team"
+                    }
+                },
+                {
+                    $unwind: "$team"
+                },
+                {
                     $sort: { commentCount: -1 }
                 },
                 {
                     $limit: 5
                 },
                 {
-                    $project: { title: 1, commentCount: 1 }
+                    $project: {
+                        title: 1,
+                        commentCount: 1,
+                        team: { _id: 1, name: 1 }
+                    }
                 }
             ]);
     
@@ -97,8 +112,7 @@ class ForumService {
         } catch (error) {
             throw new Error('Failed to retrieve trending posts');
         }
-    }
-    
+    }    
 
 }
 

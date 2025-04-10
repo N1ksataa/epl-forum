@@ -7,6 +7,8 @@ import Register from "./components/register/Register";
 import Logout from "./components/logout/Logout";
 import Home from "./components/home/Home";
 import CreatePost from "./components/create-post/CreatePost";
+import EditPost from "./components/edit-post/EditPost";
+import EditComment from "./components/edit-comment/EditComment";
 import PostsPage from "./components/posts-page/PostsPage";
 import PostsByTeam from "./components/posts-by-team/PostsByTeam";
 import ProfilePage from "./components/profile-page/ProfilePage";
@@ -39,6 +41,8 @@ function App() {
                     <Route element={<AuthGuard />}>
                         <Route path="/create-post" element={<CreatePost />} />
                         <Route path="/edit-profile" element={<EditProfile />} />
+                        <Route path="/edit-post/:postId" element={<EditPost />} />
+                        <Route path="/posts/:postId/comments/:commentId/edit" element={<EditComment />} />
                         <Route path="/logout" element={<Logout />} />
                     </Route>
 

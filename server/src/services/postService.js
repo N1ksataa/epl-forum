@@ -179,6 +179,17 @@ async getPostById(postId) {
         }
     }
 
+    async getComment(postId, commentId) {
+        try {
+            const comment = await Comment.findById(commentId);
+            if (!comment || comment.postId.toString() !== postId) {
+                throw new Error("Comment not found");
+            }
+            return comment;
+        } catch (error) {
+            throw new Error(`Error fetching comment: ${error.message}`);
+        }
+    }
 }
 
 export default new PostService();

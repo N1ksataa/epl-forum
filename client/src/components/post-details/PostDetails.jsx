@@ -16,7 +16,7 @@ export default function PostDetails() {
         async function fetchPost() {
             try {
                 const data = await request.get(`http://localhost:5000/api/posts/${postId}`);
-                
+
                 if (data.team._id !== teamId) {
                     throw new Error("Team ID mismatch");
                 }
@@ -35,8 +35,8 @@ export default function PostDetails() {
         navigate(`/edit-post/${postId}`);
     };
 
-    const handleEditComment = (commentId) => {
-        navigate(`/edit-comment/${commentId}`);
+    const handleEditComment = (postId, commentId) => {
+        navigate(`/posts/${postId}/comments/${commentId}/edit`);
     };
 
     const handleDeletePost = async (postId) => {
@@ -59,7 +59,7 @@ export default function PostDetails() {
             setError('Error deleting comment');
         }
     };
-    
+
     const handleCommentSubmit = async () => {
         if (newComment.trim()) {
             try {
@@ -69,20 +69,20 @@ export default function PostDetails() {
                     { text: newComment },
                     authToken
                 );
-    
+
 
                 setPost((prevPost) => ({
                     ...prevPost,
                     comments: [...prevPost.comments, newCommentData],
                 }));
-    
+
                 setNewComment('');
             } catch (error) {
                 setError('Failed to add comment');
             }
         }
     };
-    
+
 
     if (error) {
         return <div className="error-message">{error}</div>;
@@ -98,18 +98,20 @@ export default function PostDetails() {
                 <h2 className="post-title">{post.title}</h2>
                 <div className="post-meta">
                     <span>
-                        By <Link to={`/profile/${post.author._id}`}>{post.author.username}</Link>
+                        By <Link to={`/profile/${post.author._id}`}>{post.author.username} </Link>
                     </span>
-                    <span> | Team: {post.team.name}</span>
+                    <span> | Team: {post.team.name} </span>
+                    | Posted:&nbsp;
+                            {new Date(post.createdAt).toLocaleString()}
                     <span> | Last updated: {new Date(post.updatedAt).toLocaleString()}</span>
                 </div>
                 <p className="post-content">{post.content}</p>
                 {user?._id === post.author._id && (
-                        <div className="post-actions">
-                            <button onClick={() => handleEditPost(post._id)}></button>
-                            <button onClick={() => handleDeletePost(post._id)}></button>
-                        </div>
-                    )}
+                    <div className="post-actions">
+                        <button onClick={() => handleEditPost(post._id)}></button>
+                        <button onClick={() => handleDeletePost(post._id)}></button>
+                    </div>
+                )}
             </div>
 
             <h3>Replies</h3>
@@ -124,21 +126,29 @@ export default function PostDetails() {
                             </div>
                         )}
                         <span>
-                            By <Link to={`/profile/${comment.userId._id}`}>{comment.userId.username}</Link> | {new Date(comment.createdAt).toLocaleString()}
+                            By <Link to={`/profile/${comment.userId._id}`}>{comment.userId.username}</Link> | Posted:&nbsp;
+                            {new Date(comment.createdAt).toLocaleString()}
+                            {comment.updatedAt && (
+                                <> | Last updated: {new Date(comment.updatedAt).toLocaleString()}</>
+                            )}
                         </span>
-
                     </li>
                 ))}
             </ul>
 
-            <div className="new-comment">
-                <textarea
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Write a comment..."
-                />
-                <button onClick={handleCommentSubmit} disabled={!newComment.trim()}>Submit Comment</button>
-            </div>
+
+            {user && (
+                <div className="new-comment">
+                    <textarea
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        placeholder="Write a comment..."
+                    />
+                    <button onClick={handleCommentSubmit} disabled={!newComment.trim()}>
+                        Submit Comment
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

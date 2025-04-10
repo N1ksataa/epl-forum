@@ -112,6 +112,16 @@ postController.post("/:id/comments", authMiddleware, async (req, res) => {
     }
 });
 
+postController.get("/:postId/comments/:commentId", authMiddleware, async (req, res) => {
+    const { postId, commentId } = req.params;
+
+    try {
+        const comment = await postService.getComment(postId, commentId);
+        res.json(comment);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 postController.put("/:postId/comments/:commentId", authMiddleware, async (req, res) => {
     const { postId, commentId } = req.params;

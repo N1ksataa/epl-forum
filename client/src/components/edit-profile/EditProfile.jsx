@@ -211,6 +211,7 @@ export default function EditProfile() {
                         <input
                             type="password"
                             id="oldPassword"
+                            autoComplete="oldPassword"
                             name="oldPassword"
                             value={formData.oldPassword}
                             onChange={handleChange}
@@ -221,6 +222,7 @@ export default function EditProfile() {
                         <input
                             type="password"
                             id="newPassword"
+                            autoComplete="newPassword"
                             name="newPassword"
                             value={formData.newPassword}
                             onChange={handleChange}
@@ -235,6 +237,7 @@ export default function EditProfile() {
                         <input
                             type="password"
                             id="confirmPassword"
+                            autoComplete="confirmPassword"
                             name="confirmPassword"
                             value={formData.confirmPassword}
                             onChange={handleChange}

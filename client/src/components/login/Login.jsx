@@ -83,6 +83,7 @@ export default function Login() {
                 <input
                     type="text"
                     id="username"
+                    autoComplete="username"
                     placeholder="Enter your username"
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -97,6 +98,7 @@ export default function Login() {
                 <input
                     type="password"
                     id="password"
+                    autoComplete="password"
                     placeholder="Enter your password"
                     onChange={handleChange}
                     onBlur={handleBlur}

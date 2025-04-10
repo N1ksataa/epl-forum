@@ -169,3 +169,128 @@
     margin: 10x 0;
     padding-left: 40px;
 }
+
+@media (max-width: 1700px) {
+    .posts-page-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 1350px) {
+    .posts-page-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding: 0 15px;
+    }
+
+    .topic-lists {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .posts-page-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 0 10px;
+        width: 100%;
+    }
+
+    .topic-lists {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .forum-item {
+        min-height: auto;
+        padding: 15px;
+        flex-direction: column;
+        align-items: center; /* Центриране на елементите в поста */
+        justify-content: flex-start;
+        text-align: center; /* Центриране на текста */
+    }
+
+    .team-logo {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px; /* Малко разстояние под логото */
+    }
+
+    .team-name {
+        font-size: 1em;
+        min-width: auto;
+        text-align: center; /* Центриране на името на отбора */
+        margin-bottom: 10px; /* Разстояние под името на отбора */
+    }
+
+    .post-stats {
+        min-width: 80px;
+        text-align: center; /* Центриране на статистиките */
+        margin-bottom: 10px; /* Разстояние под статистиките */
+    }
+
+    .last-post {
+        min-width: auto;
+        text-align: center; /* Центриране на последния пост */
+        color: gray;
+        white-space: nowrap;
+    }
+
+    .last-post-title.no-posts {
+        text-align: center; /* Центриране на текста "No posts yet" */
+        font-size: 1em;
+    }
+
+    .last-post-title {
+        font-weight: bold;
+        color: black;
+        text-align: center; /* Центриране на заглавието на последния пост */
+    }
+
+    .last-post-link {
+        font-weight: bold;
+        text-decoration: none;
+        color: #e100ffd3;
+        word-wrap: break-word;
+        white-space: normal;
+        text-align: center; /* Центриране на линка */
+    }
+
+    .username-link {
+        text-decoration: none;
+        color: #e100ffd3;
+        font-weight: bold;
+        text-align: center; /* Центриране на линка на потребителя */
+    }
+
+    .last-post-author {
+        color: black;
+        text-align: center; /* Центриране на автора */
+    }
+
+    .last-post-date {
+        font-size: 0.8em;
+        color: #777;
+        text-align: center; /* Центриране на датата */
+    }
+
+    .forum-row {
+        flex-direction: column;
+        gap: 10px;
+        padding: 0 10px;
+        align-items: center; /* Центриране на редовете */
+    }
+
+    .sidebar {
+        display: none; /* Скриване на страничната лента */
+    }
+}

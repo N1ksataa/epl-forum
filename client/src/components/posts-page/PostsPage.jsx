@@ -94,7 +94,7 @@ export default function PostsPage() {
                     <ul>
                         {trendingPosts.map(post => (
                             <li key={post._id}>
-                                <Link to={`/post/${post._id}`}>
+                                <Link to={`/posts/${post.team._id}/${post._id}`}>
                                     {post.title.length > 30 ? post.title.substring(0, 27) + '...' : post.title}
                                 </Link>
                                 &nbsp;- {post.commentCount} Comments
